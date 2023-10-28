@@ -54,8 +54,10 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     }
   };
 
+  inputRef = React.createRef<HTMLInputElement>();
   componentDidMount() {
     this.getLastSearchQuery();
+    this.inputRef.current?.focus();
   }
 
   render() {
@@ -63,6 +65,7 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
       <form className={styles.searchBar} onSubmit={this.handleSearchClick}>
         <div className={styles.inputContainer}>
           <input
+            ref={this.inputRef}
             type="text"
             placeholder={this.state.placeholderText}
             value={this.state.value}

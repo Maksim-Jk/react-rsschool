@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import styles from './Header.module.css';
 

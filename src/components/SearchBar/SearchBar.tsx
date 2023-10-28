@@ -1,4 +1,10 @@
-import React, { Component, ChangeEvent } from 'react';
+import {
+  Component,
+  ChangeEvent,
+  createRef,
+  MouseEvent,
+  FormEvent,
+} from 'react';
 import styles from './SearchBar.module.css';
 
 interface SearchBarProps {
@@ -28,7 +34,7 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     this.setState({ placeholderText: 'Enter Pokemon name' });
   };
 
-  handleSearchClick = (event: React.FormEvent<HTMLFormElement>) => {
+  handleSearchClick = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { value } = this.state;
 
@@ -46,7 +52,7 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     }
   };
 
-  handleResetClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  handleResetClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (this.state.value !== '') {
       event.preventDefault();
       this.props.onSearch('*');
@@ -54,7 +60,8 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     }
   };
 
-  inputRef = React.createRef<HTMLInputElement>();
+  inputRef = createRef<HTMLInputElement>();
+
   componentDidMount() {
     this.getLastSearchQuery();
     this.inputRef.current?.focus();

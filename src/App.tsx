@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import SearchResults from '@/components/SearchResults/SearchResults';
 import Header from '@/components/Header/Header';
 import { Datum, RootObject } from '@/types/apiResponse';

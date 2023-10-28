@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import styles from './SearchResults.module.css';
 import { Datum } from '@/types/apiResponse';
 import PokemonCard from '@/components/PokemonCard/PokemonCard';

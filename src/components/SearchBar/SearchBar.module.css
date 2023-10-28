@@ -6,7 +6,7 @@
 }
 
 .searchBar:has(input:focus) {
-  outline: #006ae1 3px solid;;
+  outline: #006ae1 3px solid;
 }
 
 .inputContainer {

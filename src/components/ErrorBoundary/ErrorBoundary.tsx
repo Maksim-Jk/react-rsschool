@@ -1,4 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
+import styles from './ErrorBoundary.module.css';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -6,12 +7,18 @@ interface ErrorBoundaryProps {
 
 interface ErrorBoundaryState {
   hasError: boolean;
+  error: Error | null;
+  errorInfo: ErrorInfo | null;
 }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false };
+    this.state = {
+      hasError: false,
+      error: null,
+      errorInfo: null,
+    };
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
@@ -21,8 +28,17 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
   render() {
     if (this.state.hasError) {
-      // Здесь можно отрендерить компонент с сообщением об ошибке или другой UI для обработки ошибки.
-      return <div>Что-то пошло не так.</div>;
+      return (
+        <div className={styles.container}>
+          <h1 className={styles.heading}>Ошибка</h1>
+          <p className={styles.message}>
+            Что-то пошло не так. Пожалуйста, повторите попытку позже.
+          </p>
+          <a className={styles.link} href="/">
+            Вернуться на главную страницу
+          </a>
+        </div>
+      );
     }
     return this.props.children;
   }

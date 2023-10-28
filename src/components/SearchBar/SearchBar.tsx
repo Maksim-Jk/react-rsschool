@@ -8,12 +8,14 @@ interface SearchBarProps {
 interface SearchBarState {
   value: string;
   validateForm: boolean;
+  placeholderText: string;
 }
 
 class SearchBar extends Component<SearchBarProps, SearchBarState> {
   state: SearchBarState = {
     value: '',
     validateForm: true,
+    placeholderText: 'Enter Pokemon name',
   };
 
   getLastSearchQuery = () => {
@@ -23,6 +25,7 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
 
   handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({ value: event.target.value, validateForm: true });
+    this.setState({ placeholderText: 'Enter Pokemon name' });
   };
 
   handleSearchClick = (event: React.FormEvent<HTMLFormElement>) => {
@@ -31,8 +34,15 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
 
     if (value.trim() === '') {
       this.setState({ validateForm: false });
+      this.setState({ placeholderText: 'Fill in the field' });
     } else {
-      this.props.onSearch(value.trim());
+      const regex = /^[a-zA-Z]+$/;
+      if (regex.test(value)) {
+        this.props.onSearch(value.trim());
+      } else {
+        this.setState({ validateForm: false });
+        this.setState({ value: '', placeholderText: 'Only english letters' });
+      }
     }
   };
 
@@ -54,7 +64,7 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
         <div className={styles.inputContainer}>
           <input
             type="text"
-            placeholder="Enter Pokemon name"
+            placeholder={this.state.placeholderText}
             value={this.state.value}
             onChange={this.handleInputChange}
             className={`${styles.input} ${

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SearchBar from '@/components/SearchBar/SearchBar'; // Импортируйте компонент SearchBar
+import SearchBar from '@/components/SearchBar/SearchBar';
 import styles from './Header.module.css';
 
 interface HeaderProps {
@@ -19,7 +19,7 @@ class Header extends Component<HeaderProps> {
 
   render() {
     if (this.state.hasError) {
-      throw new Error('Вы нажали кнопку "throw error"');
+      throw new Error('You press "throw error" button');
     }
 
     return (

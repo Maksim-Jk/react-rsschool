@@ -30,12 +30,12 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     if (this.state.hasError) {
       return (
         <div className={styles.container}>
-          <h1 className={styles.heading}>Ошибка</h1>
+          <h1 className={styles.heading}>Error</h1>
           <p className={styles.message}>
-            Что-то пошло не так. Пожалуйста, повторите попытку позже.
+            Something went wrong. Please, try again
           </p>
           <a className={styles.link} href="/">
-            Вернуться на главную страницу
+            Back to the main page
           </a>
         </div>
       );

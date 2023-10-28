@@ -30,7 +30,7 @@ class App extends Component<NonNullable<unknown>, IAppState> {
       .then((response) => response.json())
       .then((data: RootObject) => {
         if (data.count === 0) {
-          this.setState({ error: 'Ничего не найдено' });
+          this.setState({ error: 'No results were found for your request :(' });
         } else {
           this.setState({ results: data.data, error: null });
         }
@@ -41,7 +41,7 @@ class App extends Component<NonNullable<unknown>, IAppState> {
         }
       })
       .catch((error) => {
-        console.error('Ошибка:', error);
+        console.error('Error:', error);
         throw error;
       })
       .finally(() => {

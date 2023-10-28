@@ -19,37 +19,44 @@ class App extends Component<NonNullable<unknown>, IAppState> {
     isLoading: false,
   };
 
-  handleSearch = (searchTerm: string = '') => {
+  handleSearch = (searchQuery: string) => {
     this.setState({ isLoading: true });
-    const prevSearchTerm = localStorage.getItem('lastSearchTerm');
-    const searchQuery =
-      prevSearchTerm && prevSearchTerm !== ''
-        ? `&q=name:*${prevSearchTerm}*&page=1`
-        : searchTerm !== ''
-        ? `&q=name:*${searchTerm}*&page=1`
-        : '';
-    const queryURL = `https://api.pokemontcg.io/v2/cards/?pageSize=${this.state.pageSize}${searchQuery}`;
-    // Вызов API с использованием fetch
+
+    const queryURL = `https://api.pokemontcg.io/v2/cards/?pageSize=${
+      this.state.pageSize
+    }&q=name:${searchQuery + '*'}`;
+
     fetch(queryURL)
       .then((response) => response.json())
       .then((data: RootObject) => {
-        data.data.length !== 0
-          ? this.setState({ results: data.data })
-          : this.setState({ error: 'Ничего не найдено' });
-        data.data.length !== 0 &&
-          localStorage.setItem('lastSearchTerm', searchTerm);
+        if (data.count === 0) {
+          this.setState({ error: 'Ничего не найдено' });
+        } else {
+          this.setState({ results: data.data, error: null });
+        }
+        if (searchQuery === '*') {
+          localStorage.removeItem('lastQuery');
+        } else {
+          localStorage.setItem('lastQuery', searchQuery);
+        }
       })
       .catch((error) => {
         console.error('Ошибка:', error);
-        this.setState({ error });
+        throw error;
       })
       .finally(() => {
         this.setState({ isLoading: false });
       });
   };
 
+  fetchDataOnLoading = () => {
+    const lastQuery = localStorage.getItem('lastQuery');
+    const newSearchQuery = lastQuery ? lastQuery : '*';
+    this.handleSearch(newSearchQuery);
+  };
+
   componentDidMount() {
-    this.handleSearch();
+    this.fetchDataOnLoading();
   }
 
   render() {

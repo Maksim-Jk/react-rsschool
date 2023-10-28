@@ -6,38 +6,47 @@ interface SearchBarProps {
 }
 
 interface SearchBarState {
-  searchTerm: string;
+  value: string;
   validateForm: boolean;
 }
 
 class SearchBar extends Component<SearchBarProps, SearchBarState> {
   state: SearchBarState = {
-    searchTerm: localStorage.getItem('lastSearchTerm') || '',
+    value: '',
     validateForm: true,
   };
 
+  getLastSearchQuery = () => {
+    const lastQuery = localStorage.getItem('lastQuery');
+    lastQuery && this.setState({ value: lastQuery });
+  };
+
   handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchTerm: event.target.value, validateForm: true });
+    this.setState({ value: event.target.value, validateForm: true });
   };
 
   handleSearchClick = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { searchTerm } = this.state;
+    const { value } = this.state;
 
-    searchTerm.trim() !== ''
-      ? this.props.onSearch(searchTerm.trim())
-      : this.setState({ validateForm: false });
+    if (value.trim() === '') {
+      this.setState({ validateForm: false });
+    } else {
+      this.props.onSearch(value.trim());
+    }
   };
 
   handleResetClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    console.log(localStorage.getItem('lastSearchTerm'));
-    if (localStorage.getItem('lastSearchTerm') === '') {
-      return;
+    if (this.state.value !== '') {
+      event.preventDefault();
+      this.props.onSearch('*');
+      this.setState({ value: '', validateForm: true });
     }
-    this.setState({ searchTerm: '' });
-    this.props.onSearch('');
   };
+
+  componentDidMount() {
+    this.getLastSearchQuery();
+  }
 
   render() {
     return (
@@ -46,13 +55,14 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
           <input
             type="text"
             placeholder="Enter Pokemon name"
-            value={this.state.searchTerm}
+            value={this.state.value}
             onChange={this.handleInputChange}
             className={`${styles.input} ${
               this.state.validateForm ? '' : styles.invalidInput
             }`}
           />
           <button
+            type="button"
             onClick={this.handleResetClick}
             className={styles.resetButton}
           >

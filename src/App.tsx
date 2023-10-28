@@ -51,7 +51,7 @@ class App extends Component<NonNullable<unknown>, IAppState> {
 
   fetchDataOnLoading = () => {
     const lastQuery = localStorage.getItem('lastQuery');
-    const newSearchQuery = lastQuery ? lastQuery : '*';
+    const newSearchQuery = lastQuery ? lastQuery : '';
     this.handleSearch(newSearchQuery);
   };
 

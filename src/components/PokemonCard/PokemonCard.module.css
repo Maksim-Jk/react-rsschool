@@ -1,0 +1,68 @@
+.pokemon-card {
+    border: 2px solid #e5e5e5;
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 4px 4px -4px rgba(30, 33, 44, 0.03), 0 12px 10px -6px rgba(154, 156, 165, 0.04), 0 30px 24px -10px rgba(154, 156, 165, 0.05), 0 80px 80px -20px rgba(154, 156, 165, 0.08);
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+    flex: 1; /* Разрешить элементам занимать доступное горизонтальное пространство */
+    max-width: 250px; /* Ограничение максимальной ширины карточек */
+
+}
+
+.body {
+    padding: 10px;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-5px);
+}
+
+.pokemon-card img {
+    width: 100%;
+    height: auto;
+}
+
+.pokemon-card h2 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    color: #333;
+}
+
+.pokemon-card p {
+    margin: 8px 0;
+    color: #666;
+}
+
+.pokemon-card p:first-child {
+    font-weight: bold;
+    color: #000;
+}
+
+.pokemon-card p:last-child {
+    font-style: italic;
+}
+
+.pokemon-card.types {
+    display: flex;
+    justify-content: center;
+}
+
+.pokemon-card.types span {
+    background-color: #f2f2f2;
+    color: #333;
+    padding: 4px 8px;
+    border-radius: 12px;
+    margin: 4px;
+    font-size: 0.9rem;
+}
+
+.pokemon-card.types span:first-child {
+    margin-left: 0;
+}
+
+.pokemon-card.types span:last-child {
+    margin-right: 0;
+}

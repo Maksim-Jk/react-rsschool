@@ -1,0 +1,6 @@
+.results {
+    display: flex;
+    flex-wrap: wrap; /* Это важно для переноса элементов на следующую строку */
+    gap: 20px;
+    justify-content: center;
+}

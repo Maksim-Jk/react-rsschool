@@ -30,8 +30,11 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
   };
 
   handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ value: event.target.value, validateForm: true });
-    this.setState({ placeholderText: 'Enter Pokemon name' });
+    this.setState({
+      value: event.target.value,
+      validateForm: true,
+      placeholderText: 'Enter Pokemon name',
+    });
   };
 
   handleSearchClick = (event: FormEvent<HTMLFormElement>) => {
@@ -39,15 +42,20 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     const { value } = this.state;
 
     if (value.trim() === '') {
-      this.setState({ validateForm: false });
-      this.setState({ placeholderText: 'Fill in the field' });
+      this.setState({
+        validateForm: false,
+        placeholderText: 'Fill in the field',
+      });
     } else {
       const regex = /^[a-zA-Z]+$/;
       if (regex.test(value)) {
         this.props.onSearch(value.trim());
       } else {
-        this.setState({ validateForm: false });
-        this.setState({ value: '', placeholderText: 'Only english letters' });
+        this.setState({
+          validateForm: false,
+          value: '',
+          placeholderText: 'Only english letters',
+        });
       }
     }
   };
